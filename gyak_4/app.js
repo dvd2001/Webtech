@@ -1,6 +1,13 @@
 const maxTry=20;
 let tryCount=0;
-const random = Math.random()*1000000;
+const random = Math.floor(Math.random()*1000000);
+console.log(random);
+document.getElementById('tippek').innerHTML='Tippelések száma: '+tryCount+'/'+maxTry;
+document.getElementById('tipp').addEventListener('keydown',function(event){
+    if(event.key==='Enter'){
+        tippel();
+    }
+});
 function tippel(){
     tryCount++;
     document.getElementById('tippek').innerHTML='Tippek: '+(tryCount+1)+'/'+maxTry;
