@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git App - User adatlap</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h4>User adatlap</h4>
+    <div class="container">
+        <div class="row">
+            <div id = "image" class="col"></div>
+            <div class="col">
+                <h4 id="name"></h4>
+                <p id="bio"></p>
+                <p id="location"></p>
+                <p id="blog"></p>
+                <p id="followers"></p>
+                <p id="repos"></p>
+            </div>
+        </div>
+    </div>
+        
+    <script src="app.js"></script>
+    <script>
+        async function loadUser(userName){
+            try{
+                const res = await fetch('https://api.github.com/users/' + userName, {
+                    headers: {
+                        'Authorization': 'Bearer '+GITHUB_ACCESS_TOKEN
+                    }
+                });
+
+                if(!res.ok) {
+                    throw 'Server error ocurred, status: '+res.status;
+                }
+
+                const data = await res.json();
+
+                console.log(data);
+
+                const nameElem = document.querySelector('#name');
+                nameElem.textContent = data.login;
+
+                const imageElem = document.querySelector('#image');
+                imageElem.innerHTML=`<img src="${data.avatar_url}" alt="Avatar" width=200px height=200px ">`;
+
+                const followersElem = document.querySelector('#followers');
+                followersElem.innerHTML=`<strong>Followers:</strong> ${data.followers}`;
+
+                const reposElem = document.querySelector('#repos');
+                reposElem.innerHTML=`<strong>Repositories:</strong> ${data.public_repos}`;
+                
+                const bioElem=document.querySelector('#bio');
+                bioElem.textContent = data.bio;
+
+                if(data.location) {
+                    locationElem=document.querySelector('#location');
+                    locationElem.innerHTML=`<strong>Location:</strong> ${data.location}`;
+                }
+
+                if(data.blog) {
+                    const blogElem=document.querySelector('#blog');
+                    blogElem.innerHTML=`<strong>Blog:</strong> <a href="${data.blog}">${data.blog}</a>`;
+                }
+            }catch(err) {
+                alert(err);
+            }
+        }
+        const params = new URLSearchParams(window.location.search);
+        const userName = params.get('name');
+        if(!userName){
+            window.location='index.html';
+        }
+
+        loadUser(userName);
+    </script>
+</body>
+</html>
