@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git App Kedvelt repok</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h4>Kedvelt Repositoryk:</h4>
+    <div class="container">
+        <ul id="repo-list"></ul>
+    </div>
+    <script src="app.js"></script>
+    <script>
+        async function loadStaredRepos() {
+            const res = await fetch('https://api.github.com/user/starred', {
+                headers: {
+                    'Authorization': 'Bearer ' + GITHUB_ACCESS_TOKEN
+                }
+            });
+
+            const data = await res.json();
+            const staredListElem = document.querySelector('#repo-list');
+            staredListElem.innerHTML = '';
+            for (const repo of data) {
+                staredListElem.innerHTML += `<li><a href="repo.html?name=${repo.full_name}">${repo.full_name}</a></li>`;
+            }
+        }
+
+        loadStaredRepos();
+    </script>
+</body>
+
+</html>

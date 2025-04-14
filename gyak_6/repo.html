@@ -12,6 +12,7 @@
     <h4 id="name"></h4>
     <p id="description"></p>
     <p id="homepage"></p>
+    <div id="star-unstar-btn"></div>
 
     <div class="container">
         <div class="row">
@@ -42,6 +43,12 @@
                     }
                 });
 
+                const starRes = await fetch('https://api.github.com/user/starred/' + repoName, {
+                    headers: {
+                        'Authorization': 'Bearer ' + GITHUB_ACCESS_TOKEN
+                    }
+                })
+
                 if (!res.ok) {
                     throw 'Server error ocurred, status: ' + res.status;
                 }
@@ -49,6 +56,8 @@
                 const data = await res.json();
 
                 const nameElem = document.querySelector('#name');
+                const starUnstarBtn = document.querySelector('#star-unstar-btn');
+
                 nameElem.textContent = data.full_name;
 
                 const descElem = document.querySelector('#description');
@@ -57,6 +66,32 @@
                 if (data.homepage) {
                     const homepageElem = document.querySelector('#homepage');
                     homepageElem.innerHTML = `<strong>Homepage:</strong> <a href="${data.homepage}">${data.homepage}</a>`;
+                }
+
+                if (starRes.ok) {
+                    starUnstarBtn.innerHTML = `<button class="btn btn-danger" id="unstar-btn">Kedvencekből eltávolít</button>`;
+                    const unstarBtn = document.querySelector('#unstar-btn');
+                    unstarBtn.addEventListener('click', async () => {
+                        await fetch('https://api.github.com/user/starred/' + repoName, {
+                            headers: {
+                                'Authorization': 'Bearer ' + GITHUB_ACCESS_TOKEN
+                            },
+                            method: 'DELETE'
+                        });
+                        //window.location.reload();
+                    });
+                } else {
+                    starUnstarBtn.innerHTML = `<button class="btn btn-primary" id="star-btn">Kedvencnek jelöl</button>`;
+                    const starBtn = document.querySelector('#star-btn');
+                    starBtn.addEventListener('click', async () => {
+                        await fetch('https://api.github.com/user/starred/' + repoName, {
+                            headers: {
+                                'Authorization': 'Bearer ' + GITHUB_ACCESS_TOKEN
+                            },
+                            method: 'PUT'
+                        });
+                        //window.location.reload();
+                    });
                 }
             } catch (err) {
                 alert(err);
