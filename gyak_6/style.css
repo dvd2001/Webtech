@@ -1,4 +1,3 @@
-
 /* === General Styles === */
 * {
     box-sizing: border-box;
@@ -86,7 +85,7 @@ a:hover {
 }
 
 /* === Forms === */
-input,
+input:not([type="checkbox"]):not([type="radio"]),
 textarea,
 select {
     width: 100%;
