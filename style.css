@@ -26,6 +26,20 @@ a:hover {
     text-decoration: underline;
 }
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: lightblue;
+    margin: 20px 0;
+    border-radius: 15px;
+}
+
+table th,
+table td {
+    padding: 10px;
+    text-align: center;
+}
+
 .navbar {
     display: flex;
     padding: 10px;
@@ -42,4 +56,21 @@ a:hover {
 .navbar a:hover {
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 15px;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -10px;
+}
+
+.col {
+    flex: 1;
+    padding: 10px;
 }
