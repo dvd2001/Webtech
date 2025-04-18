@@ -27,7 +27,11 @@
     <script>
         async function getAllCars() {
             try {
-                const neptun = prompt("Kérem a Neptun kódját:");
+                let neptun = sessionStorage.getItem("neptun");
+                if (!neptun) {
+                    neptun = prompt("Kérlek add meg a Neptun kódodat:");
+                    sessionStorage.setItem("neptun", neptun);
+                }
                 const response = await fetch(`https://iit-playground.arondev.hu/api/${neptun}/car`, {
                     headers: {
                         'accept': 'application/json'
@@ -40,9 +44,9 @@
                 const tableElement = document.querySelector("#auto-list");
                 for (car of cars) {
                     const tableBodyHtml = `<tr>
-                        <td>${car.id}</td>
-                        <td>${car.brand}</td>
-                        <td>${car.model}</td>
+                        <td><a href="get-car-by-id.html?neptun=${encodeURI(neptun)}&id=${encodeURI(car.id)}">${car.id}</a></td>
+                        <td><a href="get-car-by-id.html?neptun=${encodeURI(neptun)}&id=${encodeURI(car.id)}">${car.brand}</a></td>
+                        <td><a href="get-car-by-id.html?neptun=${encodeURI(neptun)}&id=${encodeURI(car.id)}">${car.model}</a></td>
                     </tr>`;
                     tableElement.insertAdjacentHTML("beforeend", tableBodyHtml);
                 }
