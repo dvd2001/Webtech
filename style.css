@@ -40,6 +40,11 @@ table td {
     text-align: center;
 }
 
+table th {
+    background-color: lightskyblue;
+    border-radius: 15px 15px 0 0;
+}
+
 .navbar {
     display: flex;
     padding: 10px;
@@ -73,4 +78,11 @@ table td {
 .col {
     flex: 1;
     padding: 10px;
+}
+
+#auto-list th,
+#auto-list td {
+    width: calc(100% / 2);
+    min-width: max-content;
+    ;
 }

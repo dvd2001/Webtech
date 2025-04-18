@@ -15,7 +15,6 @@
             <div class="col">
                 <table id="auto-list">
                     <tr>
-                        <th>Azonosító</th>
                         <th>Márka</th>
                         <th>Típus</th>
                     </tr>
@@ -44,7 +43,6 @@
                 const tableElement = document.querySelector("#auto-list");
                 for (car of cars) {
                     const tableBodyHtml = `<tr>
-                        <td><a href="get-car-by-id.html?neptun=${encodeURI(neptun)}&id=${encodeURI(car.id)}">${car.id}</a></td>
                         <td><a href="get-car-by-id.html?neptun=${encodeURI(neptun)}&id=${encodeURI(car.id)}">${car.brand}</a></td>
                         <td><a href="get-car-by-id.html?neptun=${encodeURI(neptun)}&id=${encodeURI(car.id)}">${car.model}</a></td>
                     </tr>`;
