@@ -37,7 +37,7 @@
                     }
                 });
                 if (!response.ok) {
-                    throw new Error('Hiba történt a válasz feldolgozása során: ' + response.message);
+                    throw response;
                 }
                 const cars = await response.json();
                 const tableElement = document.querySelector("#auto-list");
@@ -49,8 +49,9 @@
                     tableElement.insertAdjacentHTML("beforeend", tableBodyHtml);
                 }
             } catch (error) {
-                alert(error.message);
-                console.error(error);
+                const errorMessage = await error.json();
+                alert(errorMessage.message);
+                console.error(errorMessage);
             }
         }
 

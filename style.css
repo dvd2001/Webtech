@@ -45,6 +45,14 @@ table th {
     border-radius: 15px 15px 0 0;
 }
 
+button {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    margin: 0 20px 0 0;
+}
+
 .navbar {
     display: flex;
     padding: 10px;
@@ -63,10 +71,39 @@ table th {
     border-radius: 15px;
 }
 
+.btn {
+    background-color: lightblue;
+    color: blue;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: lightskyblue;
+}
+
+.btn-primary {
+    background-color: lightblue;
+    color: blue;
+}
+
+.btn-primary:hover {
+    background-color: lightskyblue;
+}
+
+.btn-danger {
+    background-color: red;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: darkred;
+}
+
 .container {
     width: 90%;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 10px auto;
 }
 
 .row {
@@ -78,6 +115,12 @@ table th {
 .col {
     flex: 1;
     padding: 10px;
+}
+
+.col-2 {
+    flex: 2;
+    padding: 10px;
+    justify-content: flex-start;
 }
 
 #auto-list th,
