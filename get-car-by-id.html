@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taxi Register - Autó adatlap</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h3>Autó adatlap:</h3>
+    <div id="owner"></div>
+    <div id="brand"></div>
+    <div id="model"></div>
+    <div id="details"></div>
+    <script src="app.js"></script>
+    <script>
+        async function getCarById() {
+            try {
+                const neptun = prompt("Kérem a Neptun kódját:");
+                const carId = prompt("Kérem az autó azonosítóját:");
+                const response = await fetch(`https://iit-playground.arondev.hu/api/${neptun}/car/${carId}`, {
+                    headers: {
+                        'accept': 'application/json'
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error('Hiba történt a válasz feldolgozása során: ' + response.message);
+                }
+                const car = await response.json();
+                console.log(car);
+                const ownerElement = document.querySelector("#owner");
+                const brandElement = document.querySelector("#brand");
+                const modelElement = document.querySelector("#model");
+                const detailsElement = document.querySelector("#details");
+                const electric = car.electric ? "Igen" : "Nem";
+                const fuelUseage = Math.round(car.fuelUse * 100) / 100;
+                const dayOfCommission = car.dayOfCommission;
+                ownerElement.innerHTML = `<strong>Tulajdonos:</strong> ${car.owner}`;
+                brandElement.innerHTML = `<strong>Márka:</strong> ${car.brand}`;
+                modelElement.innerHTML = `<strong>Típus:</strong> ${car.model}`;
+                detailsElement.innerHTML = `<p><strong>További adatok:</strong></p>`;
+                detailsElement.innerHTML += `<strong>Forgalomba helyezés dátuma:</strong> ${dayOfCommission}`;
+                if (car.electric) {
+                    detailsElement.innerHTML += `<br><strong>Elektromos:</strong> ${electric}`;
+                } else {
+                    detailsElement.innerHTML += `<br><strong>Üzemanyag-fogyasztás:</strong> ${fuelUseage} l/100km`;
+                }
+
+            } catch (error) {
+                alert(error.message);
+                console.error(error);
+            }
+        }
+
+        getCarById();
+    </script>
+</body>
+
+</html>
